@@ -20,7 +20,7 @@ const Drawer = ({ onClose, items = [], onRemove }) => {
                   ></div>
 
                   <div className="mr-20 flex">
-                    <p className="mb-5">{item.title}</p>
+                    <p className="mb-5">{item.name}</p>
                     <b>{item.price} руб.</b>
                   </div>
                   <img

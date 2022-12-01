@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import styles from "./Card.module.scss"
-const Card = ({id, title, price, imageUrl, onFavorite, onPlus, favorited = false}) => {
-   const [isAdded, setIsAdded] = useState(false)
+const Card = ({id, name, price, imageUrl, onFavorite, onPlus, favorited = false, added = false}) => {
+   const [isAdded, setIsAdded] = useState(added)
    const [favorite, setFavorite] = useState(favorited)
    const onClickPlus = () =>{
     setIsAdded(!isAdded)
-    onPlus({id, title, price, imageUrl})
+    onPlus({id, name, price, imageUrl})
    }
 
    const onClickFavorite = () =>{
-    onFavorite({id, title, price, imageUrl})
+    onFavorite({id, name, price, imageUrl})
     setFavorite(!favorite)
    }
 
@@ -21,7 +21,7 @@ const Card = ({id, title, price, imageUrl, onFavorite, onPlus, favorited = false
         </div>
 
         <img width={133} height={112} src={imageUrl} alt="none" />
-        <h5>{title}</h5>
+        <h5>{name}</h5>
 
         <div className="d-flex justify-between align-center">
           <div className="d-flex flex-column">

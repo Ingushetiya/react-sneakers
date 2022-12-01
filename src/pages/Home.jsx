@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../components/Card";
-const Home = ({id,items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart}) => {
+const Home = ({id,items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart, cartItems}) => {
+
   return (
     <div className="content p-40">
       <div className="d-flex justify-between mb-40">
@@ -29,16 +30,17 @@ const Home = ({id,items, searchValue, setSearchValue, onChangeSearchInput, onAdd
       </div>
 
       <div className="d-flex flex-wrap">
-        {items
-          .filter((item) =>
+        {items.filter((item) =>
+        
             item.name.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item, index) => {
+          ).map((item, index) => {
             return (
+              
               <Card
                 key={index}
                 onFavorite={(obj) => onAddToFavorite(obj)}
                 onPlus={(obj) => onAddToCart(obj)}
+                added={cartItems.some(obj =>Number(obj.id) === Number(item.id))}
                 {...item}
               />
             );
