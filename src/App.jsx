@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import "./index.scss";
 import Favorites from "./pages/Favorites";
 import AppContext from "./context";
-
+//React-sneakers
 
 
 function App() {
