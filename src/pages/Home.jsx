@@ -1,14 +1,39 @@
 import React from "react";
-import Card from "../components/Card";
-const Home = ({id,items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddToCart, cartItems}) => {
 
+import Card from "../components/Card";
+const Home = ({
+  id,
+  items,
+  searchValue,
+  setSearchValue,
+  onChangeSearchInput,
+  onAddToFavorite,
+  onAddToCart,
+  isLoading,
+}) => {
+  const renderItem = () => {
+    const filteredItem = items.filter((item) =>
+      item.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    return (isLoading ? [...Array(8)] : filteredItem).map((item, index) => {
+      return (
+        <Card
+          key={index}
+          onFavorite={(obj) => onAddToFavorite(obj)}
+          onPlus={(obj) => onAddToCart(obj)}
+          {...item}
+          loading={isLoading}
+        />
+      );
+    });
+  };
   return (
     <div className="content p-40">
       <div className="d-flex justify-between mb-40">
         <h1 className="">
           {searchValue
             ? `Поиск по запросу:  "${searchValue}"`
-            : "Все крассовки"}
+            : "Все крoссовки"}
         </h1>
         <div className="search-block d-flex">
           <img src="assets/Search.svg" alt="Search" />
@@ -29,23 +54,7 @@ const Home = ({id,items, searchValue, setSearchValue, onChangeSearchInput, onAdd
         </div>
       </div>
 
-      <div className="d-flex flex-wrap">
-        {items.filter((item) =>
-        
-            item.name.toLowerCase().includes(searchValue.toLowerCase())
-          ).map((item, index) => {
-            return (
-              
-              <Card
-                key={index}
-                onFavorite={(obj) => onAddToFavorite(obj)}
-                onPlus={(obj) => onAddToCart(obj)}
-                added={cartItems.some(obj =>Number(obj.id) === Number(item.id))}
-                {...item}
-              />
-            );
-          })}
-      </div>
+      <div className="d-flex flex-wrap">{renderItem()}</div>
     </div>
   );
 };

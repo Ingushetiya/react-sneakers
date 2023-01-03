@@ -15,7 +15,7 @@ const Header = ({ onClickCard }) => {
 
           <div>
             <h3 className="text-uppercase">React sneakers</h3>
-            <p className="opacity-5">Магазин лучших крассовок</p>
+            <p className="opacity-5">Магазин лучших крoссовок</p>
           </div>
         </div>
       </Link>
