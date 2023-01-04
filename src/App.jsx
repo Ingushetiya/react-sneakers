@@ -40,6 +40,7 @@ function App() {
     }
     fetchData();
   }, []);
+  // Добавление товаров в корзину
   const onAddToCart = async (obj) => {
     try {
       if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
@@ -59,6 +60,7 @@ function App() {
     }
   };
 
+  //Удаление товара из корзины
   const onRemoveItem = async (id) => {
     try {
       await axios.delete(
@@ -70,7 +72,7 @@ function App() {
       console.error(error);
     }
   };
-
+  // Добавление товара в избранное
   const onAddToFavorite = async (obj) => {
     try {
       if (favorite.find((item) => Number(item.id) === Number(obj.id))) {
@@ -129,6 +131,7 @@ function App() {
             path="/"
             element={
               <Home
+              //прорсы 
                 items={items}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
