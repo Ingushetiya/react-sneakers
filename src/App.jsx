@@ -22,28 +22,23 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-            const [cartResponse, favoritesResponse, itemsResponse] = await Promise.all([
-              axios.get(
-                "https://63813f8f9440b61b0d14b16c.mockapi.io/cart"
-              ),
-              axios.get(
-                "https://63813f8f9440b61b0d14b16c.mockapi.io/favorites"
-              ),
-              axios.get(
-                "https://63813f8f9440b61b0d14b16c.mockapi.io/items"
-              )
-            ])   
-          setIsLoading(false);    
-          setCartItems(cartResponse.data);
-          setFavorite(favoritesResponse.data);
-          setItems(itemsResponse.data);
-        }
-       catch (error) {
+        const [cartResponse, favoritesResponse, itemsResponse] =
+        //запросы для получения товара на mockapi
+          await Promise.all([
+            axios.get("https://63813f8f9440b61b0d14b16c.mockapi.io/cart"),
+            axios.get("https://63813f8f9440b61b0d14b16c.mockapi.io/favorites"),
+            axios.get("https://63813f8f9440b61b0d14b16c.mockapi.io/items"),
+          ]);
+        setIsLoading(false);
+        setCartItems(cartResponse.data);
+        setFavorite(favoritesResponse.data);
+        setItems(itemsResponse.data);
+      } catch (error) {
         console.error(error);
-        alert('Ошибка при запросе данных :(')
+        alert("Ошибка при запросе данных :(");
       }
-      } 
-     fetchData();
+    }
+    fetchData();
   }, []);
   const onAddToCart = async (obj) => {
     try {
@@ -66,10 +61,12 @@ function App() {
 
   const onRemoveItem = async (id) => {
     try {
-      await axios.delete(`https://63813f8f9440b61b0d14b16c.mockapi.io/cart/${id}`);
+      await axios.delete(
+        `https://63813f8f9440b61b0d14b16c.mockapi.io/cart/${id}`
+      );
       setCartItems((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
-      alert('Ошибка при удалении товара из корзины')
+      alert("Ошибка при удалении товара из корзины");
       console.error(error);
     }
   };
@@ -112,18 +109,18 @@ function App() {
           onAddToFavorite,
           onAddToCart,
           setCartOpened,
-          setCartItems
+          setCartItems,
         }}
       >
         {/* {cartOpene && (
         
         )} */}
-          <Drawer
-            items={cartItems}
-            onClose={() => setCartOpened(false)}
-            onRemove={onRemoveItem}
-            opened = {cartOpene}
-          />
+        <Drawer
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
+          opened={cartOpene}
+        />
 
         <Header onClickCard={() => setCartOpened(true)} />
 
