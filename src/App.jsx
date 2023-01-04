@@ -10,7 +10,7 @@ import "./index.scss";
 import Favorites from "./pages/Favorites";
 import AppContext from "./context";
 import Orders from "./pages/Orders";
-//React-sneakers
+//Project
 
 function App() {
   const [items, setItems] = useState([]);
