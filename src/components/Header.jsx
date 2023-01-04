@@ -1,6 +1,14 @@
 import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "./hooks/useCart";
+// import AppContext from "../context";
 const Header = ({ onClickCard }) => {
+  // const { cartItems } = useContext(AppContext);
+  // const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
+
+  const {totalPrice} = useCart()
+
   return (
     <header className="d-flex justify-between align-center p-40">
       <Link to="/">
@@ -22,13 +30,14 @@ const Header = ({ onClickCard }) => {
       <ul className="d-flex">
         <li className="mr-30 cu-p" onClick={onClickCard}>
           <img
+            className="img_header"
             style={{ marginRight: "10px" }}
             width={18}
             height={18}
-            src={"assets/card.svg"}
+            src={"assets/card.png"}
             alt="none"
           />
-          <span>1205 руб.</span>
+          <span>{totalPrice} руб.</span>
         </li>
         <li>
           <Link to="/favorites">
@@ -37,12 +46,14 @@ const Header = ({ onClickCard }) => {
               width={18}
               height={18}
               src={"assets/favorite.svg"}
-              alt="none"
+              alt="Закладки"
             />
           </Link>
         </li>
         <li>
-          <img width={18} height={18} src={"assets/user.svg"} alt="none" />
+          <Link to={"/orders"}>
+          <img width={18} height={18} src={"assets/user.svg"} alt="Пользователь" />
+          </Link>
         </li>
       </ul>
     </header>

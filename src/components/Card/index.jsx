@@ -47,12 +47,12 @@ const Card = ({
           </ContentLoader>
         ) : (
           <>
-            <div className={styles.favorite} onClick={() => onClickFavorite()}>
+            {onFavorite && (<div className={styles.favorite} onClick={() => onClickFavorite()}>
               <img
                 src={favorite ? "assets/like.svg" : "assets/unLike.svg"}
                 alt="like"
               />
-            </div>
+            </div>)}
 
             <img width="100%" height={135} src={imageUrl} alt="none" />
             <h5>{name}</h5>
@@ -63,11 +63,11 @@ const Card = ({
                 <b>{price}руб.</b>
               </div>
 
-              <img
+              {onPlus &&  <img
                 src={isItemAdded(id) ? "assets/addbtn.svg" : "assets/btn+.svg"}
                 alt="none"
                 onClick={() => onClickPlus(isItemAdded(id))}
-              />
+              />}
             </div>
           </>
         )}
