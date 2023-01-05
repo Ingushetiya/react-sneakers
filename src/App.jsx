@@ -43,16 +43,29 @@ function App() {
   // Добавление товаров в корзину
   const onAddToCart = async (obj) => {
     try {
-      if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
-        axios.delete(
-          `https://63813f8f9440b61b0d14b16c.mockapi.io/cart/${obj.id}`
-        );
+      const findItem = cartItems.find((item) => Number(item.id) === Number(obj.id))
+      if (findItem) {
+        
         setCartItems((prev) =>
-          prev.filter((element) => Number(element.id) !== Number(obj.id))
+          prev.filter((element) => Number(element.parentId) !== Number(obj.id))
         );
+
+        await axios.delete(
+          `https://63813f8f9440b61b0d14b16c.mockapi.io/cart/${findItem.id}`
+        );
+
       } else {
-        axios.post("https://63813f8f9440b61b0d14b16c.mockapi.io/cart", obj);
-        setCartItems((prev) => [...prev, obj]);
+        setCartItems((prev) => [...prev, obj])
+        const { data } = await axios.post("https://63813f8f9440b61b0d14b16c.mockapi.io/cart", obj);
+        setCartItems((prev) => prev.map(item => {
+          if(item.parentId === data.parentId){
+            return{
+              ...item, 
+              id: data.id
+            }
+          }
+          return item
+        }));
       }
     } catch (error) {
       alert("Ошибка про добавлении товара в корзину");
@@ -63,10 +76,11 @@ function App() {
   //Удаление товара из корзины
   const onRemoveItem = async (id) => {
     try {
+      setCartItems((prev) => prev.filter((item) => Number(item.parentId) !== Number(id)));
       await axios.delete(
         `https://63813f8f9440b61b0d14b16c.mockapi.io/cart/${id}`
       );
-      setCartItems((prev) => prev.filter((item) => item.id !== id));
+      
     } catch (error) {
       alert("Ошибка при удалении товара из корзины");
       console.error(error);
@@ -98,7 +112,7 @@ function App() {
   };
 
   const isItemAdded = (id) => {
-    return cartItems.some((obj) => Number(obj.id) === Number(id));
+    return cartItems.some((obj) => Number(obj.parentId) === Number(id));
   };
   return (
     <div className="wrapper clear">

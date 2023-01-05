@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useContext } from "react";
+// import { useContext } from "react";
 import { useState } from "react";
 import Info from "../Info";
 import { useCart } from "../hooks/useCart";
@@ -48,7 +48,7 @@ const Drawer = ({ onClose, items = [], onRemove, opened }) => {
         </h2>
         {items.length > 0 ? (
           <div className="d-flex flex-column flex">
-            <div className="items">
+            <div className="items flex">
               {items?.map((item) => {
                 return (
                   <div
